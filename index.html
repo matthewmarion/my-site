@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Marion</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --heading-color: #2c3e50;
+            --link-color: #ebbd6e; /* Soft light gold */
+            --border-color: #dddddd;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --heading-color: #ffffff;
+            --link-color: #efcc90; /* A brighter gold for dark mode */
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: var(--heading-color);
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .keyword {
+            color: var(--link-color)
+        }
+
+        .social-links a, .item a, .blog-title, .project-title {
+            margin-right: 15px;
+            text-decoration: none;
+            color: var(--link-color);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-2px);
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .about-me {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-me p {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .blog-list, .projects-list {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .blog-item, .project-item {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .blog-date, .project-title {
+            min-width: 120px;
+            margin-right: 10px;
+        }
+
+        .blog-title, .project-description {
+            flex-grow: 1;
+            font-size: 0.9em;
+            margin: 0 10px;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .blog-title:hover, .project-title:hover {
+            transform: translateY(-2px);
+        }
+
+        .blog-read-time {
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .blog-date, .blog-read-time, .project-description {
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .project-item {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-title {
+            min-width: 120px;
+            margin-right: 10px;
+        }
+
+        .project-description {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        .project-status {
+            min-width: 30px;
+            text-align: right;
+            position: relative;
+            cursor: help;
+        }
+
+        .project-status .tooltip {
+            visibility: hidden;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            right: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .project-status:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .contact-button {
+            display: block;
+            width: 150px;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: var(--bg-color);
+            color: var(--link-color);
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid var(--link-color);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: var(--link-color);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        .dark-mode-toggle::after {
+            content: '🌞';
+        }
+
+        body:not(.dark-mode) .dark-mode-toggle::after {
+            content: '🌙';
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        .profile-header {
+            background-color: rgba(253, 184, 19, 0.1); /* Subtle gold background */
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            max-width: 600px; /* Match this with your main content max-width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--link-color);
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-info h1 {
+            margin: 0 0 10px 0;
+            color: var(--heading-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .social-links a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 24px; /* Adjust icon size as needed */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-pic {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()"></button>
+    <header class="profile-header">
+        <div class="profile-container">
+            <img src="me.jpeg" alt="Matthew Marion" class="profile-pic">
+            <div class="profile-info">
+                <h1>Matthew Marion</h1>
+                <div class="social-links">
+                    <a href="https://github.com/matthewmarion" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/matthew-marion-b62192128/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="" target="_blank" aria-label="Resume"><i class="fa-solid fa-file-pdf"></i></a>
+                    <a href="https://twitter.com/matthm04" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2>About Me</h2>
+        <div class="about-me">
+            <p>
+               Hey, I'm Matt! I'm currently a <span class="keyword">senior software engineer</span> at AT&T building an <span class="keyword">AI testing automation
+               framework</span> that sits within the official AT&T AI SDLC platform.
+
+               <br><br>
+               Before, I was a computer science student at <span class="keyword">Georgia Tech</span>
+               and founder of a couple companies. I love staying up to date with the newest trends in the world of science.
+               I spend a lot time working on my nvim configs and reading hackernews.
+               
+               <br><br>
+                When I'm not programming, I like trying new restaurants,
+                playing soccer, and hanging with friends.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Projects</h2>
+        <div class="projects-list">
+            <div class="project-item">
+                <a href="#" class="project-title">Barmaid</a>
+                <span class="project-description">Marketplace streamlining rental of bars/clubs for private events.</span>
+                <span class="project-status">
+                    <i class="fas fa-tools"></i>
+                    <span class="tooltip">In Development</span>
+                </span>
+            </div>
+            <div class="project-item">
+                <a href="#" class="project-title">PrevailPots</a>
+                <span class="project-description">First competitive minecraft server to utilize tier based elo system.</span>
+                <span class="project-status">
+                    <i class="fas fa-handshake"></i>
+                    <span class="tooltip">Acquired</span>
+                </span>
+            </div>
+            <div class="project-item">
+                <a href="#" class="project-title">StaffProtection</a>
+                <span class="project-description">Authorization system developed in java - over 130 licenses sold.</span>
+                <span class="project-status">
+                    <i class="fas fa-box-archive"></i>
+                    <span class="tooltip">Retired<span>
+                </span>
+            </div>
+            <!-- Add more project items as needed -->
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Blog</h2>
+        <div class="blog-list">
+            <div class="blog-item">
+                <span class="blog-date">2024-07-16</span>
+                <a href="#" class="blog-title">first post: no more context loss</a>
+                <span class="blog-read-time">2 min read</span>
+            </div>
+            <!-- Add more blog items as needed -->
+        </div>
+    </section>
+
+    <section class="section">
+        <a href="mailto:matthewjmarion29@gmail.com" class="contact-button">Contact Me</a>
+    </section>
+
+    <script>
+        // Check for saved dark mode preference or use default (dark mode)
+        if (localStorage.getItem('darkMode') === null) {
+            localStorage.setItem('darkMode', 'enabled');
+        }
+
+        function toggleDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                localStorage.setItem('darkMode', 'disabled');
+                document.body.classList.remove('dark-mode');
+            } else {
+                localStorage.setItem('darkMode', 'enabled');
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        // Apply dark mode if it's enabled
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>
